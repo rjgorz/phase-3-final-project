@@ -15,6 +15,9 @@ class Content(Base):
     adapt_release = Column(DateTime())
     genre = Column(String())
 
+    reviews = relationship('Review', backref='content')
+    viewers = relationship('Viewer', backref='content')
+
     def __repr__(self):
         return f'Content: id={self.id} ' + \
             f'Original Title="{self.orig_title}", ' + \
@@ -26,12 +29,14 @@ class Viewer(Base):
 
     id = Column(Integer(), primary_key=True)
     name = Column(String())
-    username = Column(String())
+    
+    reviews = relationship('Review', backref='viewer')
+    contents = relationship('Content', backref='viewer')
 
     def __repr__(self):
         return f'Viewer: id={self.id} ' + \
-            f'Name="{self.name}", ' + \
-            f'Username="{self.username}"'
+            f'Name="{self.name}"'
+            # f'Username="{self.username}"'
     
 class Review(Base):
     __tablename__ = 'reviews'
@@ -39,7 +44,8 @@ class Review(Base):
     id = Column(Integer(), primary_key=True)
     viewer_id = Column(Integer(), ForeignKey('viewers.id'))
     content_id = Column(Integer(), ForeignKey('content.id'))
-    preference = Column(String())
+    orig_rating = Column(Integer())
+    adapt_rating = Column(Integer())
     
     def __repr__(self):
         return f'Review: id={self.id} ' + \
