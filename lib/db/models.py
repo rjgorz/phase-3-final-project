@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 class Content(Base):
-    __tablename__ = 'content'
+    __tablename__ = 'contents'
 
     id = Column(Integer(), primary_key=True)
     orig_title = Column(String())
@@ -44,7 +44,7 @@ class Review(Base):
 
     id = Column(Integer(), primary_key=True)
     viewer_id = Column(Integer(), ForeignKey('viewers.id'))
-    content_id = Column(Integer(), ForeignKey('content.id'))
+    content_id = Column(Integer(), ForeignKey('contents.id'))
     orig_rating = Column(Integer())
     adapt_rating = Column(Integer())
     
