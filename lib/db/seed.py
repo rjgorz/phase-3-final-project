@@ -18,28 +18,161 @@ if __name__ == '__main__':
     session.query(Review).delete()
     session.commit()
 
-    genres = ['action', 'romance', 'thriller', 'horror',
-            'adventure', 'comedy', 'drama']
-    
-    media_types = ['book', 'game', 'movie', 'comic',
-                   'manga', 'anime', 'series']
-
     contents = []
-    for i in range(50):
-        content = Content(
-            orig_title=fake.unique.word(),
-            orig_type=random.choice(media_types),
-            orig_release=datetime.now(),
-            adapt_title=fake.unique.word(),
-            adapt_type=random.choice(media_types),
-            adapt_release=datetime.now(),
-            genre=random.choice(genres)
-        )
 
-        session.add(content)
-        session.commit()
+    hp = Content(
+        orig_title = "Harry Potter Series",
+        orig_type = "Book",
+        orig_release = 1998,
+        adapt_title = "Harry Potter Series",
+        adapt_type = "Movie",
+        adapt_release = 2001,
+        genre = "Fantasy"
+    )
+    contents.append(hp)
+     
+    mk = Content(
+        orig_title = "Mortal Kombat",
+        orig_type = "Game",
+        orig_release = 1992,
+        adapt_title = "Mortal Kombat",
+        adapt_type = "Movie",
+        adapt_release = 2021,
+        genre= "Action"
+     )
+    contents.append(mk)
 
-        contents.append(content)
+    tlou = Content(
+        orig_title = "The Last of Us",
+        orig_type = "Game",
+        orig_release = 2013,
+        adapt_title = "The Last of Us",
+        adapt_type = "TV series",
+        adapt_release = 2023,
+        genre = "Adventure"
+    )
+    contents.append(tlou)
+    
+    gl = Content(
+        orig_title = "All-American Comics no. 16",
+        orig_type = "Comic",
+        orig_release = 1940,
+        adapt_title = "Green Lantern",
+        adapt_type = "Movie",
+        adapt_release = 2011,
+        genre = "Action"
+    )
+    contents.append(gl)
+    
+    iw = Content(
+        orig_title = "The Infinity War",
+        orig_type = "Comic",
+        orig_release = 1992,
+        adapt_title = "Avengers: Infinity War",
+        adapt_type = "Movie",
+        adapt_release = 2018,
+        genre = "Action"
+    )
+    contents.append(iw)
+
+    fpp = Content(
+        orig_title = "Flashpoint ",
+        orig_type = "Comic",
+        orig_release = 2011,
+        adapt_title = "Justice League: The Flashpoint Paradox",
+        adapt_type = "Movie",
+        adapt_release = 2013,
+        genre = "Action"
+    )
+    contents.append(fpp)
+
+    dn = Content(
+        orig_title = "Deathnote",
+        orig_type = "Light Novel",
+        orig_release = 2006,
+        adapt_title = "Deathnote",
+        adapt_type = "Anime",
+        adapt_release = 2007,
+        genre = "Mystery"
+    )
+    contents.append(dn)
+
+    silsil = Content(
+        orig_title = "Shrek!",
+        orig_type = "Book",
+        orig_release = 1990,
+        adapt_title = "Shrek",
+        adapt_type = "Movie",
+        adapt_release = 2001,
+        genre = "Action"
+    )
+    contents.append(silsil)
+    
+    lctr = Content(
+        orig_title = "Tomb Raider",
+        orig_type = "Book",
+        orig_release = 1996,
+        adapt_title = "Lara Croft: Tomb Raider",
+        adapt_type = "Movie",
+        adapt_release = 2001,
+        genre = "Action"
+    )
+    contents.append(lctr)
+
+    fi = Content(
+        orig_title = "Flatiron School",
+        orig_type = "School",
+        orig_release = 2012,
+        adapt_title = "Flatiron School: Flex",
+        adapt_type = "Online Prog",
+        adapt_release = 2021 ,
+        genre = "Action"
+    )
+    contents.append(fi)
+
+    session.add_all(contents)
+    session.commit()
+
+    # Harry Potter
+    # Mortal Kombat
+    # The Last of Us
+    # Game of Thrones
+    # Green Lantern 
+    # Infinity Wars 
+    # Flashpoint paradox
+    # Deathnote  
+    # Shrek
+    # Laura Croft's Tomb raider
+    # Flatiron 
+
+
+
+
+
+
+
+    # genres = ['action', 'romance', 'thriller', 'horror',
+    #         'adventure', 'comedy', 'drama']
+    
+    # media_types = ['book', 'game', 'movie', 'comic',
+    #                'manga', 'anime', 'series']
+
+    # contents = []
+    # for i in range(10):
+    #     content = Content(
+    #         orig_title=fake.unique.word(),
+    #         orig_type=random.choice(media_types),
+    #         orig_release=datetime.now(),
+    #         adapt_title=fake.unique.word(),
+    #         adapt_type=random.choice(media_types),
+    #         adapt_release=datetime.now(),
+    #         genre=random.choice(genres)
+    #     )
+
+    #     session.add(content)
+    #     session.commit()
+
+    #     contents.append(content)
 
     viewers = []
     for i in range(10):
@@ -57,7 +190,7 @@ if __name__ == '__main__':
         for i in range(random.randint(1, 3)):
             review = Review(
                 viewer_id=random.randint(1, 10),
-                content_id=random.randint(1, 50),
+                content_id=random.randint(1, 10),
                 orig_rating=random.randint(1, 10),
                 adapt_rating=random.randint(1, 10)
             )

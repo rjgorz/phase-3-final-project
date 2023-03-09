@@ -11,20 +11,20 @@ class Content(Base):
     id = Column(Integer(), primary_key=True)
     orig_title = Column(String())
     orig_type = Column(String())
-    orig_release = Column(DateTime())
+    orig_release = Column(Integer())
     adapt_title = Column(String())
     adapt_type = Column(String())
-    adapt_release = Column(DateTime())
+    adapt_release = Column(Integer())
     genre = Column(String())
 
     reviews = relationship('Review', backref='content')
     # viewers = relationship('Viewer', backref='content')
 
     def __repr__(self):
-        return f'Content: id={self.id} ' + \
-            f'Original Title="{self.orig_title}", ' + \
-            f'Adaptation Title="{self.adapt_title}", ' + \
-            f'Genre={self.genre}'
+        return f'ID: {self.id} || ' + \
+            f'Original Title: "{self.orig_title}" || ' + \
+            f'Adaptation Title: "{self.adapt_title}" || ' + \
+            f'Genre: {self.genre}'
     
 class Viewer(Base):
     __tablename__ = 'viewers'
