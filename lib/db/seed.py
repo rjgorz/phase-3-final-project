@@ -128,6 +128,7 @@ if __name__ == '__main__':
         adapt_release = 2021 ,
         genre = "Action"
     )
+
     got = Content(
         orig_title = "A Game of Thrones",
         orig_type = "Book",
@@ -167,15 +168,16 @@ if __name__ == '__main__':
 
     reviews = []
     for content in contents:
-        for i in range(random.randint(1, 3)):
+        viewer_ids = list(range(1, 10))
+        for i in range(random.randint(3, 5)):
             review = Review(
-                viewer_id=random.randint(1, 10),
-                content_id=random.randint(1, 11),
+                viewer_id=random.choice(viewer_ids),
+                content_id=content.id,
                 orig_rating=random.randint(1, 10),
                 adapt_rating=random.randint(1, 10)
             )
+            viewer_ids.remove(review.viewer_id)
             reviews.append(review)
-
-    session.bulk_save_objects(reviews)
-    session.commit()
+            session.add(review)
+            session.commit()
     session.close()

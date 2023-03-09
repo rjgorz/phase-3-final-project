@@ -68,16 +68,18 @@ def display_viewer_details(viewer):
     print('-' * 50)
     print(f'{" " * side_spaces}{viewer.name}{" " * side_spaces}')
     print('-' * 50)
-
-    for review in viewer.reviews:
-        print(f'|{review.id} |Review of "{review.content.orig_title}" vs "{review.content.adapt_title}"')
+    if len(viewer.reviews) == 0:
+        print(f'{viewer.name} has not written any reviews!')
+    else:    
+        for review in viewer.reviews:
+            print(f'|{review.id} |Review of "{review.content.orig_title}" vs "{review.content.adapt_title}"')
 
 def get_all_reviews(content):
     if len(content.reviews) == 0:
         print('No reviews have been left for this content!')
-    else:
-        print('====== REVIEWS ======')
+    else:       
         for review in content.reviews:
+            print('====== REVIEWS ======')
             print(" ")
             print(f'{review.viewer.name}')
             print(f'{content.orig_type}: {review.orig_rating}/10')
@@ -91,25 +93,25 @@ def display_review_details(review):
     print(f'{review.content.adapt_type}: {review.adapt_rating}/10')
     if review.orig_rating > review.adapt_rating:
         print(f'{review.viewer.name} prefers the original!')
-    else:
+    elif review.orig_rating < review.adapt_rating:
         print(f'{review.viewer.name} prefers the adaptation!')
+    else:
+        print(f'{review.viewer.name} feels the same about both!')
     print(" ")
 
 # This will be the helper function to get a sum of all reviews and display the prefferred type
 def get_overall_preference(content, session) -> dict:
-
-
     orig_rating = session.query(func.avg(Review.orig_rating)).filter(Review.content_id == content.id).scalar() or 0
     adapt_rating = session.query(func.avg(Review.adapt_rating)).filter(Review.content_id == content.id).scalar() or 0
-    if orig_rating > adapt_rating:
-        result = 'Original rating is higher!'
-    elif orig_rating < adapt_rating:
-        result = 'Adaptation rating is higher!'
+    if int(orig_rating) > int(adapt_rating):
+        result = f'Original {content.orig_type} rating is higher!'
+    elif int(orig_rating) < int(adapt_rating):
+        result = f'{content.adapt_type} Adaptation rating is higher!'
     else:
         result = 'Both ratings are equal!'
 
-    print(f'Original Average Rating: {orig_rating}/10')
-    print(f'Adapted Average Rating: {adapt_rating}/10')
+    print(f'Original Average Rating: {int(orig_rating)}/10')
+    print(f'Adaptation Average Rating: {int(adapt_rating)}/10')
     print(result)
 
 #testing
@@ -131,5 +133,7 @@ def get_overall_preference(content, session) -> dict:
 
 #         if orig_avg > adapt_avg:
 #             print(f'{review.content.orig_title} ({review.content.orig_type}) is preferred by viewers!')
+#         elif if orig_avg < adapt_avg:
+#             print(f'{review.content.adapt_title} ({review.content.adapt_type}) is preferred by viewers!')
 #         else:
 #             print(f'{review.content.adapt_title} ({review.content.adapt_type}) is preferred by viewers!')

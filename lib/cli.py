@@ -9,12 +9,22 @@ engine = create_engine('sqlite:///db/media_adaptations.db')
 session = sessionmaker(bind=engine)()
 
 if __name__ == '__main__':
+    print('******************************************************************************************************************')
+    print(' __  __ ______ _____ _____                       _____          _____ _______    _______ _____ ____  _   _  _____ ')
+    print('|  \/  |  ____|  __ \_   _|   /\           /\   |  __ \   /\   |  __ \__   __|/\|__   __|_   _/ __ \| \ | |/ ____|')
+    print('| \  / | |__  | |  | || |    /  \         /  \  | |  | | /  \  | |__) | | |  /  \  | |    | || |  | |  \| | (___  ')
+    print('| |\/| |  __| | |  | || |   / /\ \       / /\ \ | |  | |/ /\ \ |  ___/  | | / /\ \ | |    | || |  | | . ` |\___ \ ')
+    print('| |  | | |____| |__| || |_ / ____ \     / ____ \| |__| / ____ \| |      | |/ ____ \| |   _| || |__| | |\  |____) |')
+    print('|_|  |_|______|_____/_____/_/    \_\   /_/    \_\_____/_/    \_\_|      |_/_/    \_\_|  |_____\____/|_| \_|_____/ ')
+    print('                                                                                                                  ')
+    print('******************************************************************************************************************')
+    
     cont = True
     while cont:
-        print('Browse by:')
+        print('Welcome! Choose to browse by:')
         print('(1) Content')
         print('(2) Viewers')
-        display_choice = input('= ')
+        display_choice = input('=> ')
 
         if display_choice == '1':
             display_all_content(session.query(Content).all())
@@ -25,7 +35,7 @@ if __name__ == '__main__':
             print('Choose an action:')
             print('(1) See all reviews')
             print('(2) Get overall preference')
-            choice = input('= ')
+            choice = input('=> ')
 
             if choice == '1':
                 get_all_reviews(content_choice)
@@ -35,12 +45,14 @@ if __name__ == '__main__':
         elif display_choice == '2':
             display_all_viewers(session.query(Viewer).all())
             choice = input('Select the viewer by ID for details: ')
-            display_viewer_details(session.query(Viewer).filter(Viewer.id == choice).first())
+            viewer_choice = session.query(Viewer).filter(Viewer.id == choice).first()
+            display_viewer_details(viewer_choice)
 
-            review_choice = input('Select a review by ID for details: ')
-            display_review_details(session.query(Review).filter(Review.id == review_choice).first())
+            if len(viewer_choice.reviews) != 0:
+                review_choice = input('Select a review by ID for details: ')
+                display_review_details(session.query(Review).filter(Review.id == review_choice).first())
     
-
+        print(" ")
         another = input('Continue browsing? (y/n): ')
         while another != 'y' or another != 'n':
             if another == 'y':
