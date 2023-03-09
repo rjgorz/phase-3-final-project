@@ -108,27 +108,28 @@ def get_overall_preference(content, session) -> dict:
     else:
         result = 'Both ratings are equal!'
 
+    print(f'Original Average Rating: {orig_rating}/10')
+    print(f'Adapted Average Rating: {adapt_rating}/10')
     print(result)
-    return result
 
 #testing
-def get_pref(content):
-    orig_sum = 0
-    adapt_sum = 0
+# def get_pref(content):
+#     orig_sum = 0
+#     adapt_sum = 0
 
-    if len(content.reviews) == 0:
-        print('No reviews have been left for this content!')
-    else:
-        for review in content.reviews:
-            orig_sum += review.orig_rating
-            adapt_sum += review.adapt_rating
-        orig_avg = orig_sum / len(content.reviews)
-        adapt_avg = adapt_sum / len(content.reviews)
+#     if len(content.reviews) == 0:
+#         print('No reviews have been left for this content!')
+#     else:
+#         for review in content.reviews:
+#             orig_sum += review.orig_rating
+#             adapt_sum += review.adapt_rating
+#         orig_avg = orig_sum / len(content.reviews)
+#         adapt_avg = adapt_sum / len(content.reviews)
         
-        print(f'Original Average Rating: {orig_avg}/10')
-        print(f'Adapted Average Rating: {adapt_avg}/10')
+#         print(f'Original Average Rating: {orig_avg}/10')
+#         print(f'Adapted Average Rating: {adapt_avg}/10')
 
-        if orig_avg > adapt_avg:
-            print(f'{review.content.orig_title} ({review.content.orig_type}) is preferred by viewers!')
-        else:
-            print(f'{review.content.adapt_title} ({review.content.adapt_type}) is preferred by viewers!')
+#         if orig_avg > adapt_avg:
+#             print(f'{review.content.orig_title} ({review.content.orig_type}) is preferred by viewers!')
+#         else:
+#             print(f'{review.content.adapt_title} ({review.content.adapt_type}) is preferred by viewers!')
