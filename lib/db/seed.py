@@ -128,6 +128,15 @@ if __name__ == '__main__':
         adapt_release = 2021 ,
         genre = "Action"
     )
+    got = Content(
+        orig_title = "A Game of Thrones",
+        orig_type = "Book",
+        orig_release = 1996,
+        adapt_title = "A Game of Thrones",
+        adapt_type = "Tv Series",
+        adapt_release = 2011 ,
+        genre = "Action"
+    )
     contents.append(fi)
 
     session.add_all(contents)
@@ -145,35 +154,6 @@ if __name__ == '__main__':
     # Laura Croft's Tomb raider
     # Flatiron 
 
-
-
-
-
-
-
-    # genres = ['action', 'romance', 'thriller', 'horror',
-    #         'adventure', 'comedy', 'drama']
-    
-    # media_types = ['book', 'game', 'movie', 'comic',
-    #                'manga', 'anime', 'series']
-
-    # contents = []
-    # for i in range(10):
-    #     content = Content(
-    #         orig_title=fake.unique.word(),
-    #         orig_type=random.choice(media_types),
-    #         orig_release=datetime.now(),
-    #         adapt_title=fake.unique.word(),
-    #         adapt_type=random.choice(media_types),
-    #         adapt_release=datetime.now(),
-    #         genre=random.choice(genres)
-    #     )
-
-    #     session.add(content)
-    #     session.commit()
-
-    #     contents.append(content)
-
     viewers = []
     for i in range(10):
         viewer = Viewer(
@@ -190,7 +170,7 @@ if __name__ == '__main__':
         for i in range(random.randint(1, 3)):
             review = Review(
                 viewer_id=random.randint(1, 10),
-                content_id=random.randint(1, 10),
+                content_id=random.randint(1, 11),
                 orig_rating=random.randint(1, 10),
                 adapt_rating=random.randint(1, 10)
             )

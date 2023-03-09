@@ -1,7 +1,8 @@
 ###############################################################
 ###################### HELPER FUNCTIONS #######################
 ###############################################################
-
+from sqlalchemy.orm import Session
+from sqlalchemy import func
 from db.models import Content, Viewer, Review
 
 def display_all_content(contents):
@@ -37,7 +38,7 @@ def display_content_details(content):
     print(f'|{" " * 33}ORIGINAL CONTENT{" " * 32}||{" " * 32}ADAPTATION CONTENT{" " * 31}|')
     print('-' * 166)
     print('|Title                                   |Type        |Release Year  |Genre       |' * 2)
-    # print('-' * 166)
+    print('-' * 166)
 
     print(f'|{content.orig_title}{" " * orig_title_spaces}' + \
           f'|{content.orig_type}{" " * orig_type_spaces}' + \
@@ -71,16 +72,41 @@ def display_viewer_details(viewer):
     for review in viewer.reviews:
         print(f'|{review.id} |Review of "{review.content.orig_title}" vs "{review.content.adapt_title}"')
 
+def get_all_reviews(content):
+    if len(content.reviews) == 0:
+        print('No reviews have been left for this content!')
+    else:
+        print('====== REVIEWS ======')
+        for review in content.reviews:
+            print(" ")
+            print(f'{review.viewer.name}')
+            print(f'{content.orig_type}: {review.orig_rating}/10')
+            print(f'{content.adapt_type}: {review.adapt_rating}/10')
+            print(" ")
 
+def display_review_details(review):
+    print(" ")
+    print(f'"{review.content.orig_title}" vs "{review.content.adapt_title}"')
+    print(f'{review.content.orig_type}: {review.orig_rating}/10')
+    print(f'{review.content.adapt_type}: {review.adapt_rating}/10')
+    if review.orig_rating > review.adapt_rating:
+        print(f'{review.viewer.name} prefers the original!')
+    else:
+        print(f'{review.viewer.name} prefers the adaptation!')
+    print(" ")
 
+# This will be the helper function to get a sum of all reviews and display the prefferred type
+def get_overall_preference(content, session) -> dict:
 
+    result = {}
+    orig_rating = session.query(func.avg(Review.orig_rating)).filter(Review.content_id == content.id).scalar() or 0
+    adapt_rating = session.query(func.avg(Review.adapt_rating)).filter(Review.content_id == content.id).scalar() or 0
+    if orig_rating > adapt_rating:
+        result[content.id] = 'Original rating is higher'
+    elif orig_rating < adapt_rating:
+        result[content.id] = 'Adaptation rating is higher'
+    else:
+        result[content.id] = 'Both ratings are equal'
 
-
-# def search_content_by_name():
-#     search = input("Enter a name or ID to search for: ")
-#     if search.isnumeric():
-#         search_by_id = True
-#         search = int(search)
-#     else:
-#         search_by_id = False
-#     display_all_content(search, search_by_id)
+    print(result)
+    return result
