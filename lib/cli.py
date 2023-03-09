@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from db.models import Content, Viewer, Review
 from helpers import (display_all_content, display_all_viewers, display_content_details, display_viewer_details,
-                     get_all_reviews, display_review_details, get_overall_preference)
+                     get_all_reviews, display_review_details, get_overall_preference, get_pref)
 
 engine = create_engine('sqlite:///db/media_adaptations.db')
 session = sessionmaker(bind=engine)()
@@ -30,7 +30,8 @@ if __name__ == '__main__':
             if choice == '1':
                 get_all_reviews(content_choice)
             elif choice == '2':
-                get_overall_preference(content_choice, session)
+                # get_overall_preference(content_choice, session)
+                get_pref(content_choice)
 
         elif display_choice == '2':
             display_all_viewers(session.query(Viewer).all())

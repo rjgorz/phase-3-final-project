@@ -7,7 +7,7 @@ from db.models import Content, Viewer, Review
 
 def display_all_content(contents):
     print('-' * 102)
-    print(f'|{" " * 46}CONTENT{" " * 45}|')
+    print(f'|{" " * 47}CONTENT{" " * 46}|')
     print('-' * 102)
     print('|ID  |Orig Title                  |Orig Type   |Adapt Title                             |Adapt Type  |')
     print('-' * 102)
@@ -98,15 +98,37 @@ def display_review_details(review):
 # This will be the helper function to get a sum of all reviews and display the prefferred type
 def get_overall_preference(content, session) -> dict:
 
-    result = {}
+
     orig_rating = session.query(func.avg(Review.orig_rating)).filter(Review.content_id == content.id).scalar() or 0
     adapt_rating = session.query(func.avg(Review.adapt_rating)).filter(Review.content_id == content.id).scalar() or 0
     if orig_rating > adapt_rating:
-        result[content.id] = 'Original rating is higher'
+        result = 'Original rating is higher!'
     elif orig_rating < adapt_rating:
-        result[content.id] = 'Adaptation rating is higher'
+        result = 'Adaptation rating is higher!'
     else:
-        result[content.id] = 'Both ratings are equal'
+        result = 'Both ratings are equal!'
 
     print(result)
     return result
+
+#testing
+def get_pref(content):
+    orig_sum = 0
+    adapt_sum = 0
+
+    if len(content.reviews) == 0:
+        print('No reviews have been left for this content!')
+    else:
+        for review in content.reviews:
+            orig_sum += review.orig_rating
+            adapt_sum += review.adapt_rating
+        orig_avg = orig_sum / len(content.reviews)
+        adapt_avg = adapt_sum / len(content.reviews)
+        
+        print(f'Original Average Rating: {orig_avg}/10')
+        print(f'Adapted Average Rating: {adapt_avg}/10')
+
+        if orig_avg > adapt_avg:
+            print(f'{review.content.orig_title} ({review.content.orig_type}) is preferred by viewers!')
+        else:
+            print(f'{review.content.adapt_title} ({review.content.adapt_type}) is preferred by viewers!')
