@@ -75,16 +75,18 @@ def display_viewer_details(viewer):
             print(f'|{review.id} |Review of "{review.content.orig_title}" vs "{review.content.adapt_title}"')
 
 def get_all_reviews(content):
+    print('====== REVIEWS ======')
     if len(content.reviews) == 0:
         print('No reviews have been left for this content!')
     else:       
         for review in content.reviews:
-            print('====== REVIEWS ======')
+            
             print(" ")
             print(f'{review.viewer.name}')
             print(f'{content.orig_type}: {review.orig_rating}/10')
             print(f'{content.adapt_type}: {review.adapt_rating}/10')
             print(" ")
+            print('=====================')
 
 def display_review_details(review):
     print(" ")
@@ -99,7 +101,6 @@ def display_review_details(review):
         print(f'{review.viewer.name} feels the same about both!')
     print(" ")
 
-# This will be the helper function to get a sum of all reviews and display the prefferred type
 def get_overall_preference(content, session) -> dict:
     orig_rating = session.query(func.avg(Review.orig_rating)).filter(Review.content_id == content.id).scalar() or 0
     adapt_rating = session.query(func.avg(Review.adapt_rating)).filter(Review.content_id == content.id).scalar() or 0

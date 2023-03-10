@@ -25,10 +25,12 @@ if __name__ == '__main__':
         print('(1) Content')
         print('(2) Viewers')
         display_choice = input('=> ')
+        print(" ")
 
         if display_choice == '1':
             display_all_content(session.query(Content).all())
             id_choice = input('Select the content by ID for details: ')
+            print(" ")
             content_choice = session.query(Content).filter(Content.id == id_choice).first()
             display_content_details(content_choice)
 
@@ -36,6 +38,7 @@ if __name__ == '__main__':
             print('(1) See all reviews')
             print('(2) Get overall preference')
             choice = input('=> ')
+            print(" ")
 
             if choice == '1':
                 get_all_reviews(content_choice)
@@ -45,11 +48,13 @@ if __name__ == '__main__':
         elif display_choice == '2':
             display_all_viewers(session.query(Viewer).all())
             choice = input('Select the viewer by ID for details: ')
+            print(" ")
             viewer_choice = session.query(Viewer).filter(Viewer.id == choice).first()
             display_viewer_details(viewer_choice)
 
             if len(viewer_choice.reviews) != 0:
                 review_choice = input('Select a review by ID for details: ')
+                print(" ")
                 display_review_details(session.query(Review).filter(Review.id == review_choice).first())
     
         print(" ")

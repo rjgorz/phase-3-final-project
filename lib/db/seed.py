@@ -119,16 +119,6 @@ if __name__ == '__main__':
     )
     contents.append(lctr)
 
-    fi = Content(
-        orig_title = "Flatiron School",
-        orig_type = "School",
-        orig_release = 2012,
-        adapt_title = "Flatiron School: Flex",
-        adapt_type = "Online Prog",
-        adapt_release = 2021 ,
-        genre = "Action"
-    )
-
     got = Content(
         orig_title = "A Game of Thrones",
         orig_type = "Book",
@@ -136,6 +126,17 @@ if __name__ == '__main__':
         adapt_title = "A Game of Thrones",
         adapt_type = "Tv Series",
         adapt_release = 2011 ,
+        genre = "Action"
+    )
+    contents.append(got)
+
+    fi = Content(
+        orig_title = "Flatiron School",
+        orig_type = "School",
+        orig_release = 2012,
+        adapt_title = "Flatiron School: Flex",
+        adapt_type = "Online Prog",
+        adapt_release = 2021 ,
         genre = "Action"
     )
     contents.append(fi)
@@ -168,13 +169,13 @@ if __name__ == '__main__':
 
     reviews = []
     for content in contents:
-        viewer_ids = list(range(1, 10))
+        viewer_ids = list(range(1, 11))
         for i in range(random.randint(3, 5)):
             review = Review(
                 viewer_id=random.choice(viewer_ids),
                 content_id=content.id,
-                orig_rating=random.randint(1, 10),
-                adapt_rating=random.randint(1, 10)
+                orig_rating=random.randint(1, 11),
+                adapt_rating=random.randint(1, 11)
             )
             viewer_ids.remove(review.viewer_id)
             reviews.append(review)
